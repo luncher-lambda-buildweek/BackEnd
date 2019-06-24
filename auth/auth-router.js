@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken')
 
 const secrets = require('../config/secrets')
 
+const Users = require('')
+
 
 router.post('/register', (req, res) => {
     let user = req.body;
