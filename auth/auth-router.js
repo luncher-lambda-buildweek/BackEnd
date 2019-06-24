@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const jwt = require('jsonwebtoken')
 
-const secrets = require('../config/secret')
+const secrets = require('../config/secrets')
 
 
 router.post('/register', (req, res) => {
