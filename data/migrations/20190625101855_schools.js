@@ -21,10 +21,10 @@ exports.up = function (knex) {
         schools
             .integer('phoneNumber', 128)
         schools
-            .integer('fundsNeeded', 128)
+            .integer('fundsNeeded')
             .notNullable();
         schools
-            .integer('currentFunds', 128)
+            .integer('currentFunds')
         schools
             .string('schoolImg', 500)
     });

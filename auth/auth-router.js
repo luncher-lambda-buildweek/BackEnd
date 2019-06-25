@@ -17,7 +17,7 @@ router.post('/register', (req, res) => {
     Users.add(user)
         .then(saved => {
             const token = generateToken(user)
-            res.status(201).json({token});
+            res.status(201).json({message: `You are registered as ${user.email}!`, token, id: user.id, role: user.role});
                 
         })
         .catch(error => {

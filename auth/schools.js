@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const restricted = require('./restricted-middleware');
 const Schools = require('../helpers/schoolsModel');
+const Users = require('../helpers/usersModel')
 
 router.get('/', (req, res) => {
-    Schools.getItems()
+    Schools.getSchools()
     .then(schools => {
         res.status(200).json(schools);
     })
@@ -28,7 +29,11 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', restricted, async (req, res) => {
     try {
-        let school = await Schools.addschool(req.body);
+        const email = req.user.email
+        const user = await Users.findBy({email})
+        const attributes = {...req.body, user_id: user.id}
+        let school = await Schools.addSchool(attributes);
+        console.log(attributes)
         res.status(201).json({ message: "School has been added", school });
         } catch (error) {
          res.status(500).json({ error, message: "Please provide info for schoolName, location, and fundsNeeded" });
