@@ -26,7 +26,7 @@ exports.up = function (knex) {
         schools
             .integer('currentFunds')
         schools
-            .string('schoolImg', 500)
+            .string('schoolImg', 5000)
     });
 };
 
