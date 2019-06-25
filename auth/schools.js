@@ -35,8 +35,8 @@ router.post('/', restricted, async (req, res) => {
         let school = await Schools.addSchool(attributes);
         console.log(attributes)
         res.status(201).json({ message: "School has been added", school });
-        } catch (error) {
-         res.status(500).json({ error, message: "Please provide info for schoolName, location, and fundsNeeded" });
+    } catch (error) {
+        res.status(500).json({ error, message: "Please provide info for schoolName, location, and fundsNeeded" });
     }
 });
 

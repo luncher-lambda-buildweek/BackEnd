@@ -31,22 +31,19 @@ https://luncher-app.herokuapp.com
 **Users Table:**
 - email <-- Required (string) (unique)
 - password <-- Required (string) 
-- role (string: has to be either donor or school)
+- role (string: has to be either donor or school) <-- Required
 - firstName (string)
 - lastName (string)
 
 
 
 #### 201 Created Responds with
-Example of the following body with any of the non-required inputs
+Example of a successful response
 ```
 {
-    "id": 2,
-    "email": "sarah@email.com",
-    "password": "$2a$10$V9ZkIkDMa0knA/I5l7BwoOmjJ3reCFNlASdhASHDdDDnAIQuzVBPrhuUyC",
-    "role": "school",
-    "firstName": John,
-    "lastName": Smith,
+    "message": "You are registered as sarahlee@email.com!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhcmFobGVlQGVtYWlsLmNvbSIsInJvbGUiOiJzY2hvb2wiLCJpYXQiOjE1NjE0OTQxODYsImV4cCI6MTU2MTU4MDU4Nn0.raH3thnFjS0a6OHEyD1QRQ6_MHlLpGLycNmkwTHmvDo",
+    "role": "school"
 }
 ```
 
@@ -59,9 +56,10 @@ Example of the following body with any of the non-required inputs
 Example of the following body
 ```
 {
-    "email": "sarah@email.com",
-    "token": "eYsdasyfsAYDhyeyseyewyeYASDYYySYyefhFHEUWWEYyweyfYUEYYFYWEYWEYFweFYEYWEFWYwYWEYFHWEYFweYFYWEDHFHfdhhfdhfhewOEIOWOEIuu",
-    "id": 2
+    "message": "Welcome sarahlee@email.com!",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo3LCJlbWFpbCI6InNhcmFobGVlQGVtYWlsLmNvbSIsInJvbGUiOiJzY2hvb2wiLCJpYXQiOjE1NjE0OTQzMzQsImV4cCI6MTU2MTU4MDczNH0.WJPO65qAfrZSxX6n8oAXX-c52ZCFIJmfVNaUXf8PcQU",
+    "id": 7,
+    "role": "school"
 }
 ```
 
@@ -72,25 +70,27 @@ Example of an array of objects
 ```
 [
     {
-        "id": 1,
-        "school": "NorthRidge Highschool",
-        "address": "58 northridge street
-        San Francisco, CA 94066"
-        "phone": 4158859292,
-        "email": sarah@email.com,
-        "neededFund": 5000.00,
-        "imgURL": "https://images.pexels.com/photos/289740/pexels-photo-289740.jpeg?cs=srgb&dl=chairs-classroom-college-289740.jpg&fm=jpg"
+        "id": 2,
+        "user_id": 5,
+        "schoolName": "Harvest",
+        "location": "San Francisco",
+        "email": null,
+        "phoneNumber": null,
+        "fundsNeeded": 5000,
+        "currentFunds": null,
+        "schoolImg": null
     },
     {
-        "id": 2,
-        "school": "Southgate Highschool",
-        "address": "330 southgate street
-        San Francisco, CA 94066"
-        "phone": 4157896192,
-        "email": bob@email.com,
-        "neededFund": 400.00,
-        "imgURL": "https://images.pexels.com/photos/289740/pexels-photo-289740.jpeg?cs=srgb&dl=chairs-classroom-college-289740.jpg&fm=jpg"
-    },
+        "id": 3,
+        "user_id": 5,
+        "schoolName": "NorthRidge Highschool",
+        "location": "San Francisco",
+        "email": null,
+        "phoneNumber": null,
+        "fundsNeeded": 400,
+        "currentFunds": null,
+        "schoolImg": null
+    }
 ]
 ```
 ## Get Specific School /api/schools/:id (GET)
@@ -98,27 +98,27 @@ Example of an array of objects
 Example of an object with body
 ```
 {
-    "id": 2,
-    "school": "Southgate Highschool",
-    "address": "330 southgate street
-    San Francisco, CA 94066"
-    "phone": 4157896192,
-    "email": bob@email.com,
-    "neededFund": 400.00,
-    "currentFund": 20.00
-    "imgURL": "https://images.pexels.com/photos/289740/pexels-photo-289740.jpeg?cs=srgb&dl=chairs-classroom-college-289740.jpg&fm=jpg"
+    "id": 3,
+    "user_id": 5,
+    "schoolName": "NorthRidge Highschool",
+    "location": "San Francisco",
+    "email": null,
+    "phoneNumber": null,
+    "fundsNeeded": 400,
+    "currentFunds": null,
+    "schoolImg": null
 }
 ```
 ## Add School /api/schools (POST)
 #### Must be a registered user with role as school or logged in
 **Schools Table**
-- users_id <-- Foreign key that references the id of users
+- user_id <-- Foreign key that references the id of users
 - id <-- Primary key 
-- school <-- Required (string)
-- address <-- Required (string)
-- neededFund <-- Required (integer)
-- currentFund <-- (integer)
-- phone <-- (integer)
+- schoolName <-- Required (string)
+- location <-- Required (string)
+- fundsNeeded <-- Required (integer)
+- currentFunds <-- (integer)
+- phoneNumber <-- (integer)
 - email <-- (string))
 
 
@@ -128,14 +128,15 @@ Message and example of body with any non-required inputs
 {
     "message": "School has been added",
     "school": {
-        "id": 10,
-        "user_id": 2,
-        "school": "Hogwarts",
-        "address": "9 Hogwarts street Los Angeles, CA 92222",
-        "neededFund": 4000.00,
-        "currentFund": 90,
-        "phone": 2332223443,
-        "email": "hogwarts@email.com"
+        "id": 2,
+        "user_id": 5,
+        "schoolName": "Harvest",
+        "location": "San Francisco",
+        "email": null,
+        "phoneNumber": null,
+        "fundsNeeded": 5000,
+        "currentFunds": null,
+        "schoolImg": null
     }
 }
 ```
@@ -147,25 +148,26 @@ Message and example with updated values
 ```
 {
     "message": "The following updates have been made:",
-    "school": {
-        "id": 10,
-        "user_id": 2,
-        "school": "Hogwarts",
-        "address": "9 Hogwarts street Los Angeles, CA 92222",
-        "neededFund": 4000.00,
-        "currentFund": 90,
-        "phone": 2332223443,
-        "email": "hogwarts@email.com"
+    "changes": {
+        "id": 3,
+        "user_id": 5,
+        "schoolName": "NorthRidge Highschool",
+        "location": "San Francisco",
+        "email": null,
+        "phoneNumber": null,
+        "fundsNeeded": 50000,
+        "currentFunds": null,
+        "schoolImg": null
     }
 }
 ```
 ## Delete Specific school (DELETE)
 #### Must be a registered user with role as school or logged in to delete item
 #### 202 Success Responds with
-Message with title of school deleted
+Message with name of school deleted
 ```
 {
     "message": "The following school listing was removed:",
-    "deleted": "Hogwarts"
+    "schoolName": "NorthRidge Highschool"
 }
 ```
