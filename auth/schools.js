@@ -26,5 +26,14 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.post('/', restricted, async (req, res) => {
+    try {
+        let item = await Schools.addschool(req.body);
+        res.status(201).json({ message: "School has been added", school });
+        } catch (error) {
+         res.status(500).json({ error, message: "Please provide info for schoolName, location, and fundsNeeded" });
+    }
+});
+
 
 module.exports = router;
