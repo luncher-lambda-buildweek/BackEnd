@@ -11,7 +11,7 @@ exports.up = function (knex) {
             .string('password', 128)
             .notNullable();
         users
-            .string('roles', 128)
+            .string('role', 128)
             .notNullable()
     });
 };
