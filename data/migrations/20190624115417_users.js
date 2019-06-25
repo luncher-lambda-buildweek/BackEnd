@@ -13,6 +13,10 @@ exports.up = function (knex) {
         users
             .string('role', 128)
             .notNullable()
+        users
+            .string('firstName', 128)
+        users
+            .string('lastName', 128)
     });
 };
 
