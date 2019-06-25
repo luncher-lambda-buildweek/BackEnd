@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const restricted = require('./restricted-middleware');
-const Schools = require('../helpers/schools/schoolsModel');
+const Schools = require('../helpers/schoolsModel');
 
 router.get('/', (req, res) => {
     Schools.getItems()
@@ -52,11 +52,11 @@ router.put('/:id', restricted, async (req, res) => {
 router.delete('/:id', restricted, async (req, res) => {
     try {
         let school = await Schools.removeSchool(req.params.id, req.body);
-        const school = req.body.schoolName;
+        const schoolName = req.body.schoolName;
         if (!school) {
             res.status(404).json({ error: "School does not exist" });
         } else {
-            res.status(202).json({ message: "The following school listing was removed:", school });
+            res.status(202).json({ message: "The following school listing was removed:", schoolName });
         } 
     } catch (err) {
         res.status(500).json({ error: "Unable to delete school" });
