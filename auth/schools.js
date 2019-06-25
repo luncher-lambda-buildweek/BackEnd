@@ -49,5 +49,19 @@ router.put('/:id', restricted, async (req, res) => {
     }
 });
 
+router.delete('/:id', restricted, async (req, res) => {
+    try {
+        let school = await Schools.removeSchool(req.params.id, req.body);
+        const school = req.body.schoolName;
+        if (!school) {
+            res.status(404).json({ error: "School does not exist" });
+        } else {
+            res.status(202).json({ message: "The following school listing was removed:", school });
+        } 
+    } catch (err) {
+        res.status(500).json({ error: "Unable to delete school" });
+     }
+});
+
 
 module.exports = router;
