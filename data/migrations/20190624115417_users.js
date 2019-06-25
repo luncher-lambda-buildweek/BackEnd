@@ -12,7 +12,6 @@ exports.up = function (knex) {
             .notNullable();
         users
             .string('role', 128)
-            .notNullable()
         users
             .string('firstName', 128)
         users
