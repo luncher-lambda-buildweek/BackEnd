@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        let item = await Schools.getSchool(req.params.id)
+        let school = await Schools.getSchool(req.params.id)
         if (!school) { 
             res.status(404).json({ error: "School does not exist" });
         } else {
@@ -28,10 +28,24 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', restricted, async (req, res) => {
     try {
-        let item = await Schools.addschool(req.body);
+        let school = await Schools.addschool(req.body);
         res.status(201).json({ message: "School has been added", school });
         } catch (error) {
          res.status(500).json({ error, message: "Please provide info for schoolName, location, and fundsNeeded" });
+    }
+});
+
+router.put('/:id', restricted, async (req, res) => {
+    try {
+        let school = await Schools.updateSchool(req.params.id, req.body);
+        let changes = await Schools.getSchool(req.params.id);
+        if (!school) {
+            res.status(404).json({ error: "School does not exist" });
+        } else {
+            res.status(202).json({ message: "The following updates have been made:", changes });
+        } 
+    } catch (err) {
+        res.status(500).json({ error: "Unable to update the school" });
     }
 });
 
