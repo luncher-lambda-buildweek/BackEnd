@@ -171,3 +171,17 @@ Message with name of school deleted
     "schoolName": "NorthRidge Highschool"
 }
 ```
+
+
+## Donate /api/schools/:id/donate (POST)
+#### 202 Success Responds with
+Message and example with changes
+```
+{
+    "message": "The donation has been made!",
+    "changes": {
+        "currentFunds": 150
+    }
+}
+```
+
