@@ -68,5 +68,21 @@ router.delete('/:id', restricted, async (req, res) => {
      }
 });
 
+router.post('/:id/donate', async (req, res) => {
+    try {
+        const school = await Schools.getSchool(req.params.id)
+        const newFunds = req.body.amountDonated + school.currentFunds //parseInt
+        const changes = {currentFunds: newFunds}
+        const amountDonated = await Schools.updateSchool(school.id, changes)
+        if (school) {
+            res.status(202).json({message: "The donation has been made!", changes})
+        } else {
+            res.status(404).json({error: "Could not find school"})
+        }
+    } catch (err) {
+        res.status(500).json({error: "Unable to update donations"})
+    }
+}) 
+
 
 module.exports = router;
