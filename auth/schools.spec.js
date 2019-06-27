@@ -1,7 +1,7 @@
 const supertest = require('supertest');
 const server = require('../api/server.js');
 const db = require('../data/dbConfig.js');
-const schools = require('./schools.js');
+const schools = require('../helpers/schoolsModel.js');
 const restricted = require('../auth/restricted-middleware.js')
 
 describe('schools router', () => {
@@ -9,10 +9,11 @@ describe('schools router', () => {
         await db('schools').truncate();
     })
 
-    const schoolTest = {
+    const mockSchool = {
         user_id: 1, 
         schoolName: "testSchool", 
-        id: 1, fundsNeeded: 500, 
+        id: 1, 
+        fundsNeeded: 500, 
         location: "San Francisco" 
     }
 
@@ -49,13 +50,13 @@ describe('schools router', () => {
                 expect(response.status).toBe(404)
         })
 
-        it('should respond with 200 code if successful', async () => {
-            const response = await supertest(server)
-                .get('/api/schools/1')
-                expect(response.status).toBe(200)
+        it('should getSchool by id', async () => {
+            const testSchool = await schools.addSchool(mockSchool)
+            const findSchool = await schools.getSchool(testSchool.id)
+                expect(findSchool.id).toEqual(testSchool.id)
         })
     })
 })
 
-//
-//
+
+
