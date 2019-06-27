@@ -8,6 +8,14 @@ describe('schools router', () => {
     beforeEach(async() => {
         await db('schools').truncate();
     })
+
+    const schoolTest = {
+        user_id: 1, 
+        schoolName: "testSchool", 
+        id: 1, fundsNeeded: 500, 
+        location: "San Francisco" 
+    }
+
     describe('GET /', () => {
         it('should return a list of all schools', () => {
             const expected = [];
@@ -34,5 +42,19 @@ describe('schools router', () => {
                 expect(response.status).toBe(500)
         })
     })
+    describe('GET /:id', () => {
+        it('should respond with 404 code if the school with the ID does not exist', async () => {
+            const response = await supertest(server)
+                .get('/api/schools/1000')
+                expect(response.status).toBe(404)
+        })
 
+        it('should respond with 200 code if successful', async () => {
+            const response = await supertest(server)
+                .get('/api/schools/1')
+                expect(response.status).toBe(200)
+        })
+    })
 })
+
+//
