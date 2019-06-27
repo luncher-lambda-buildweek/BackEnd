@@ -18,7 +18,7 @@ server.use('/api/schools', schools)
 
 
 server.get('/', (req, res) => {
-  res.send("It's working!");
+  res.status(200).json({api: "It's working!"});
 });
 
 module.exports = server;
