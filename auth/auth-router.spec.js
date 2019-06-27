@@ -9,8 +9,8 @@ describe('auth-router', () => {
     })
 
     describe('Post api/register', () => {
-        it('should require authorization', async() => {
-            let user = { "id": "1", "email":"noble@email.com", "password": "password", "role":"school" }
+        it('should respond with ', async() => {
+            let user = { email:"noble@email.com", password: "password", role:"school" }
             await supertest(server)
                 .post('/register')
                 .send(user)
