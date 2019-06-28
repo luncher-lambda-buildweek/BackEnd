@@ -2,36 +2,8 @@ const supertest = require('supertest');
 const server = require('../api/server.js');
 const db = require('../data/dbConfig.js');
 const schools = require('../helpers/schoolsModel.js');
-const restricted = require('../auth/restricted-middleware.js');
 
-// let token;
 
-// beforeAll((done) => {
-
-//     let mockSchool = {
-//         user_id: 1, 
-//         schoolName: "testSchool", 
-//         id: 1, 
-//         fundsNeeded: 500, 
-//         location: "San Francisco" 
-//     }
-
-//     supertest(server)
-//         .post('/register')
-//         .send(mockSchool)
-//         .end((err, response) => {
-//             token = response.body.token
-//             done();
-//         }),
-
-//     supertest(server)
-//         .post('/login')
-//         .send(mockSchool)
-//         .end((err, response) => {
-//             token = response.body.token
-//             done();
-//         })
-// });
 
 describe('schools router', () => {
     beforeEach(async() => {
