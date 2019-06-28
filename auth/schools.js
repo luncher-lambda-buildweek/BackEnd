@@ -42,7 +42,7 @@ router.post('/', restricted, async (req, res) => {
 
 router.put('/:id', restricted, async (req, res) => {
     try {
-        let school = await Schools.updateSchool(req.params.id, req.body);
+        let school = await Schools.updateSchool(req.params.id,  sreq.body);
         let changes = await Schools.getSchool(req.params.id);
         if (!school) {
             res.status(404).json({ error: "School does not exist" });

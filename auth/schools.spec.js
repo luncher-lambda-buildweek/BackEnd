@@ -2,12 +2,42 @@ const supertest = require('supertest');
 const server = require('../api/server.js');
 const db = require('../data/dbConfig.js');
 const schools = require('../helpers/schoolsModel.js');
-const restricted = require('../auth/restricted-middleware.js')
+const restricted = require('../auth/restricted-middleware.js');
+
+// let token;
+
+// beforeAll((done) => {
+
+//     let mockSchool = {
+//         user_id: 1, 
+//         schoolName: "testSchool", 
+//         id: 1, 
+//         fundsNeeded: 500, 
+//         location: "San Francisco" 
+//     }
+
+//     supertest(server)
+//         .post('/register')
+//         .send(mockSchool)
+//         .end((err, response) => {
+//             token = response.body.token
+//             done();
+//         }),
+
+//     supertest(server)
+//         .post('/login')
+//         .send(mockSchool)
+//         .end((err, response) => {
+//             token = response.body.token
+//             done();
+//         })
+// });
 
 describe('schools router', () => {
     beforeEach(async() => {
         await db('schools').truncate();
     })
+
 
     const mockSchool = {
         user_id: 1, 
@@ -43,6 +73,7 @@ describe('schools router', () => {
                 expect(response.status).toBe(500)
         })
     })
+
     describe('GET /:id', () => {
         it('should respond with 404 code if the school with the ID does not exist', async () => {
             const response = await supertest(server)
@@ -55,6 +86,15 @@ describe('schools router', () => {
             const findSchool = await schools.getSchool(testSchool.id)
                 expect(findSchool.id).toEqual(testSchool.id)
         })
+    })
+
+    describe('DELETE /:id', () => {
+        it('should require authorization, will respond with 400 error', async () => {
+            const response = await supertest(server)
+                .delete('/api/schools/1')
+                expect(response.status).toBe(400)
+        })
+
     })
 })
 
